@@ -1,8 +1,8 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table';
-export default function Listado({tableItem}) {
+export default function Listado({ colaboradoresFiltrados }) {
 
-    const tableItems= tableItem.map((colaborador)=>(
+    const tableItems= colaboradoresFiltrados.map((colaborador)=>(
         <tr key={colaborador.id}>
             <td>{colaborador.nombre}</td>
             <td>{colaborador.correo}</td>
