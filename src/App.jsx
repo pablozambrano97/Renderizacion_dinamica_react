@@ -11,18 +11,19 @@ function App() {
     const [colaboradores, setColaboradores] = useState(BaseColaboradores);
     const [colaboradoresFiltrados, setColaboradoresFiltrados] = useState(BaseColaboradores); // <-- Nuevo estado para colaboradores filtrados
     const [alertInfo, setAlertInfo] = useState({ type: '', message: '' });
-
+     
+        
     return (
         <>
             <div>
                 <h2>Lista de colaboradores</h2>
-                <Alerta type={alertInfo.type} message={alertInfo.message} />
+                <Alerta type={alertInfo.type} message={alertInfo.message} setAlertInfo={setAlertInfo} /> 
                 <div style={{ textAlign: 'start', width: '25rem' }}>
-                    <Buscador colaboradores={colaboradores} setColaboradoresFiltrados={setColaboradoresFiltrados} setAlertInfo={setAlertInfo} /> {/* Pasamos los props necesarios al Buscador */}
+                    <Buscador colaboradores={colaboradoresFiltrados} setColaboradoresFiltrados={setColaboradoresFiltrados} setAlertInfo={setAlertInfo} /> {/* Pasamos los props necesarios al Buscador */}
                 </div>
                 <div style={{ display: 'flex', gap: '2rem' }}>
-                    <Listado colaboradoresFiltrados={colaboradoresFiltrados} /> {/* Mostramos los colaboradores filtrados */}
-                    <Formulario setColaboradores={setColaboradores} colaboradores={colaboradores} setAlertInfo={setAlertInfo} />
+                    <Listado colaboradoresFiltrados={colaboradoresFiltrados} /> 
+                    <Formulario setColaboradores={setColaboradores} setColaboradoresFiltrados={setColaboradoresFiltrados} colaboradores={colaboradores} setAlertInfo={setAlertInfo} />
                 </div>
             </div>
         </>

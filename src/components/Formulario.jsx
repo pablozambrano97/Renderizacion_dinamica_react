@@ -1,9 +1,9 @@
-import React, { useRef ,useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-export default function Formulario({ setColaboradores, colaboradores, setAlertInfo }) {
-    const [input, setInput] = useState({id:Date.now()});
+export default function Formulario({ setColaboradores, setColaboradoresFiltrados, colaboradores, setAlertInfo }) {
+    const [input, setInput] = useState({ id: Date.now() });
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const form = useRef();
 
@@ -11,22 +11,24 @@ export default function Formulario({ setColaboradores, colaboradores, setAlertIn
         setInput({ ...input, [e.target.name]: e.target.value });
     }
 
-    function validateInput(input){
-        if(!input?.nombre || !input?.correo || !input?.edad || !input?.cargo || !input?.telefono){
+    function validateInput(input) {
+        if (!input?.nombre || !input?.correo || !input?.edad || !input?.cargo || !input?.telefono) {
             setAlertInfo({ type: 'danger', message: 'Por favor complete todos los campos.' });
             return;
-        }else if(input.edad<18){
+        } else if (input.edad < 18) {
             setAlertInfo({ type: 'danger', message: 'Debe ser mayor a 18 años' });
             return;
-        } else if (!emailPattern.test(input.correo)) {     // verificar el correo 
-            setAlertInfo({type: 'danger', message:'Por favor, introduce una dirección de correo electrónico válida.'});
+        } else if (!emailPattern.test(input.correo)) {
+            setAlertInfo({ type: 'danger', message: 'Por favor, introduce una dirección de correo electrónico válida.' });
             return;
-        }else{
+        } else {
             form.current.reset();
 
-            // Usar la función setColaboradores con el estado previo para añadir el nuevo colaborador
-            setColaboradores([...colaboradores, input]);
-            setInput({id:Date.now()});  // reset form data
+            const nuevosColaboradores = [...colaboradores, input];
+            setColaboradores(nuevosColaboradores); // Actualizamos la lista de colaboradores
+            setColaboradoresFiltrados(nuevosColaboradores); // Actualizamos la lista de colaboradores filtrados
+
+            setInput({ id: Date.now() });
             setAlertInfo({ type: 'success', message: 'Colaborador agregado exitosamente.' });
         }
     }
@@ -34,7 +36,7 @@ export default function Formulario({ setColaboradores, colaboradores, setAlertIn
     function handleSubmit(e) {
         e.preventDefault();
         validateInput(input);
-        }
+    }
 
     return (
         <div>
